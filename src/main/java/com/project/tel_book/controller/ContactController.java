@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/contacts")
 public class ContactController {
@@ -31,5 +33,9 @@ public class ContactController {
             throw new ValidationException("Phone number must be in the format +7 (XXX) XXXXXXX");
         }
         return contactService.saveContact(contact);
+    }
+    @GetMapping("/all")
+    public List<Contact> getAllContacts() {
+        return contactService.getAllContacts();
     }
 }

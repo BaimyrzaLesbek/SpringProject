@@ -3,6 +3,7 @@ package com.project.tel_book.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import org.hibernate.annotations.CreationTimestamp;
 
 
 import java.time.LocalDate;
@@ -19,14 +20,15 @@ public class Contact {
     @NotBlank(message = "Phone number is mandatory")
     @Pattern(regexp = "\\+7 \\(\\d{3}\\) \\d{7}", message = "Phone number must be in the format +7 (XXX) XXXXXXX")
     private String phoneNumber;
+    @CreationTimestamp
     private LocalDate dateOfCreate;
     // Constructors, getters, and setters
     private Contact() {};
 
-    public Contact(String name, String phoneNumber, LocalDate dateOfCreate) {
+    public Contact(String name, String phoneNumber, LocalDate now) {
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.dateOfCreate = LocalDate.now();
+        this.dateOfCreate = now;
     }
 
     public Integer getId() {

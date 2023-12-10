@@ -1,6 +1,6 @@
 package com.project.tel_book.service;
 
-import com.project.tel_book.model.Contact;
+import com.project.tel_book.domain.model.Contact;
 import com.project.tel_book.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

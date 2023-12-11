@@ -1,7 +1,12 @@
-p, ROLE_USER, /contacts/byName, read
-p, ROLE_USER, /contacts/byPhoneNumber, read
-p, ROLE_ADMIN, /contacts/byName, read
-p, ROLE_ADMIN, /contacts/byPhoneNumber, read
-p, ROLE_ADMIN, /contacts/add, write
+p, ROLE_USER, /contacts/byName, GET
+p, ROLE_USER, /contacts/byPhoneNumber, GET
+p, ROLE_USER, /contacts/id, GET
+p, ROLE_ADMIN, /contacts/id, GET
+p, ROLE_ADMIN, /contacts/byName, GET
+p, ROLE_ADMIN, /contacts/byPhoneNumber, GET
+p, ROLE_ADMIN, /contacts/add, POST
+p, ROLE_ADMIN, /contacts/all, GET
+p, ROLE_ADMIN, /contacts/page, GET
+p, ROLE_ADMIN, /contacts/delete, DEL
 g, user, ROLE_USER
 g, admin, ROLE_ADMIN

@@ -5,6 +5,7 @@ import com.project.tel_book.repository.ContactRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.kafka.core.KafkaTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class ContactService {
 
     private final ContactRepository contactRepository;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     public List<Contact> getAllContacts(){
         List<Contact> contacts = contactRepository.findAll();
@@ -38,7 +40,13 @@ public class ContactService {
     }
 
     public Contact saveContact(Contact contact) {
-        return contactRepository.save(contact);
+        Contact savedContact = contactRepository.save(contact);
+
+
+        com.project.tel_book.events.DataChangeEvent event = new com.project.tel_book.events.DataChangeEvent("ContactSaved", "Contact with ID " + savedContact.getId() + " saved");
+        kafkaTemplate.send("kafka", event.getEventType(), event.toString());
+
+        return savedContact;
     }
 
     public void deleteContact(Integer id) {

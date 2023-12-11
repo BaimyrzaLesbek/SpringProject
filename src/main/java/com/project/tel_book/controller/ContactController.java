@@ -1,23 +1,18 @@
 package com.project.tel_book.controller;
-
 import com.project.tel_book.domain.model.Contact;
 import com.project.tel_book.service.ContactService;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/contacts")
 public class ContactController {
-
     @Autowired
     private ContactService contactService;
 
@@ -75,7 +70,6 @@ public class ContactController {
         }
         return ResponseEntity.noContent().build();
     }
-
 
 
 }

@@ -4,6 +4,7 @@ import com.project.tel_book.constants.Role;
 import com.project.tel_book.domain.auth.AuthenticationRequest;
 import com.project.tel_book.domain.auth.AuthenticationResponse;
 import com.project.tel_book.domain.auth.RegisterRequest;
+import com.project.tel_book.domain.auth.RegisterResponse;
 import com.project.tel_book.domain.model.User;
 import com.project.tel_book.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public RegisterResponse register(RegisterRequest request) {
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
@@ -30,10 +31,7 @@ public class AuthenticationService {
                 .role(Role.USER)
                 .build();
         repository.save(user);
-        var jwtToken = jwtService.generateAccessToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
+        return new RegisterResponse().builder().email(user.getEmail()).password(request.getPassword()).build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -45,7 +43,7 @@ public class AuthenticationService {
         );
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
-        var jwtToken = jwtService.generateAccessToken(user);
+        var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();

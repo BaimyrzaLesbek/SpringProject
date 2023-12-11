@@ -26,7 +26,8 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.disable())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/auth/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/auth/register").permitAll()
+                        .requestMatchers("/auth/authenticate").permitAll()
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

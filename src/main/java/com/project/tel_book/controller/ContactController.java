@@ -4,8 +4,11 @@ import com.project.tel_book.domain.model.Contact;
 import com.project.tel_book.service.ContactService;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +26,12 @@ public class ContactController {
         List<Contact> contacts = contactService.getAllContacts();
         return ResponseEntity.ok(contacts);
     }
-    @GetMapping
-    public ResponseEntity<List<Contact>> getAllContactsWithPagination(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+    @GetMapping("/page")
+    public ResponseEntity<Page<Contact>> getAllContactsWithPagination(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "10") Integer size
     ){
-        List<Contact> contacts = contactService.getAllContactsWithPagination(page,size);
+        Page<Contact> contacts = contactService.getAllContactsWithPagination(page,size);
         return ResponseEntity.ok(contacts);
     }
 

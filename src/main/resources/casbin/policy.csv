@@ -1,6 +1,7 @@
-p, ROLE_USER, /contacts/*, *
-p, ROLE_ADMIN, /contacts/*, *
-p, ROLE_ADMIN, /contacts/*, *
+p, ROLE_USER, /contacts/byName, read
+p, ROLE_USER, /contacts/byPhoneNumber, read
+p, ROLE_ADMIN, /contacts/byName, read
+p, ROLE_ADMIN, /contacts/byPhoneNumber, read
+p, ROLE_ADMIN, /contacts/add, write
 g, user, ROLE_USER
-g, admin, ROLE_USER
 g, admin, ROLE_ADMIN

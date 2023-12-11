@@ -20,10 +20,8 @@ public class ContactService {
         return contacts;
     }
 
-    public List<Contact> getAllContactsWithPagination(int page, int size){
-        PageRequest pageable = PageRequest.of(page, size, Sort.by("id").descending());
-        Page<Contact> contactPage = contactRepository.findAll(pageable);
-        return (List<Contact>) contactPage;
+    public Page<Contact> getAllContactsWithPagination(int page, int size){
+        return contactRepository.findAll(PageRequest.of(page, size));
     }
 
     public Optional<Contact> getContactById(Integer id) {

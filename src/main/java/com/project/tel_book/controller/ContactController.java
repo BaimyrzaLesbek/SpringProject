@@ -1,12 +1,16 @@
 package com.project.tel_book.controller;
 import com.project.tel_book.domain.model.Contact;
+import com.project.tel_book.domain.model.User;
 import com.project.tel_book.service.ContactService;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
+import org.casbin.jcasbin.main.Enforcer;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -15,6 +19,9 @@ import java.util.List;
 public class ContactController {
     @Autowired
     private ContactService contactService;
+
+    @Autowired
+    private Enforcer casbinEnforcer;
 
     @GetMapping("/all")
     public ResponseEntity<List<Contact>> getAllContacts(){
@@ -44,6 +51,13 @@ public class ContactController {
 
     @PostMapping("/add")
     public Contact saveContact(@Valid @RequestBody Contact contact) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String role = String.valueOf(user.getRole());
+        boolean allowed = casbinEnforcer.enforce(role, "/contacts/add", "POST");
+        if (!allowed){
+            throw new ValidationException("You have no access!");
+        }
         if (!contact.getPhoneNumber().matches("\\+7 \\(\\d{3}\\) \\d{7}")) {
             throw new ValidationException("Phone number must be in the format +7 (XXX) XXXXXXX");
         }
@@ -62,6 +76,13 @@ public class ContactController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteContact(@PathVariable Integer id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String role = String.valueOf(user.getRole());
+        boolean allowed = casbinEnforcer.enforce(role, "/contacts/add", "POST");
+        if (!allowed){
+            throw new ValidationException("You have no access!");
+        }
         try {
             contactService.deleteContact(id);
         }

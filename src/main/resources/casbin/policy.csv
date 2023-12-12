@@ -8,5 +8,5 @@ p, ROLE_ADMIN, /contacts/add, POST
 p, ROLE_ADMIN, /contacts/all, GET
 p, ROLE_ADMIN, /contacts/page, GET
 p, ROLE_ADMIN, /contacts/delete, DEL
-g, user, ROLE_USER
-g, admin, ROLE_ADMIN
+g, USER, ROLE_USER
+g, ADMIN, ROLE_ADMIN

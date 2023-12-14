@@ -58,7 +58,7 @@ public class ContactController {
         if (!allowed){
             throw new ValidationException("You have no access!");
         }
-        if (!contact.getPhoneNumber().matches("\\+7 \\(\\d{3}\\) \\d{7}")) {
+        if (!contact.getPhoneNumber().matches("\\+7 \\d{3}-\\d{3}-\\d{4}")) {
             throw new ValidationException("Phone number must be in the format +7 (XXX) XXXXXXX");
         }
         return contactService.saveContact(contact);

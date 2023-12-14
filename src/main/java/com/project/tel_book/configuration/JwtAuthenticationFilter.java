@@ -36,10 +36,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
-        if ("/auth/register".equals(request.getRequestURI()) || "/auth/authenticate".equals(request.getRequestURI())) {
+        if ( "/auth/register".equals(request.getRequestURI()) || "/auth/authenticate".equals(request.getRequestURI())) {
             filterChain.doFilter(request, response);
             return;
-        }
+         }
 
         if(authHeader == null || !authHeader.startsWith("Bearer ")){
             filterChain.doFilter(request, response);

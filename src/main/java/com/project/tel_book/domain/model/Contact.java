@@ -24,7 +24,7 @@ public class Contact {
     @lombok.Getter
     @Setter
     @NotBlank(message = "Phone number is mandatory")
-    @Pattern(regexp = "\\+7\\ d{3}\\-d{3}\\-d{4}", message = "Phone number must be in the format +7 XXX-XXX-XXXX")
+    @Pattern(regexp = "\\+7 \\d{3}-\\d{3}-\\d{4}", message = "Phone number must be in the format +7 XXX-XXX-XXXX")
     private String phoneNumber;
 
     @CreationTimestamp
